@@ -3490,6 +3490,27 @@ void DOSBOX_SetupConfigSections(void) {
     Pbool->Set_help("If set, enables FEP control to function for Japanese DOS/V applications, and changes the blinking of character attributes to high brightness.");
     Pbool->SetBasic(true);
 
+    secprop=control->AddSection_prop("powervr",&Null_Init,false); //PowerVR PCX2
+
+    Pbool = secprop->Add_bool("pcx2",Property::Changeable::OnlyAtStart,false);
+    Pbool->Set_help("Emulate a PowerVR PCX2 3D accelerator (as on the Matrox m3D or VideoLogic Apocalypse 3Dx) on the PCI bus.\n"
+                    "The PCX2 has no display output: it renders into the VESA linear frame buffer of the 2D card,\n"
+                    "so use machine=svga_s3 (or another card with a linear frame buffer). Games such as the\n"
+                    "PowerVR version of Tomb Raider (TOMBPCX2.EXE) use it under DOS.");
+    Pbool->SetBasic(true);
+
+    Pint = secprop->Add_int("pcx2 irq",Property::Changeable::OnlyAtStart,11);
+    Pint->Set_help("Interrupt line of the PCX2 (0 for none). The DOS driver polls for the end of each frame.");
+
+    Pint = secprop->Add_int("pcx2 render threads",Property::Changeable::OnlyAtStart,0);
+    Pint->SetMinMax(0,16);
+    Pint->Set_help("Host threads used to render each frame (0 = automatic, up to 8).");
+
+    Pdouble = secprop->Add_double("pcx2 render delay",Property::Changeable::OnlyAtStart,2.0);
+    Pdouble->SetMinMax(0.0,50.0);
+    Pdouble->Set_help("Emulated time in milliseconds between the start and the end of each frame's render.\n"
+                      "A real PCX2 takes several milliseconds; 0 reports the end of render at once.");
+
     secprop=control->AddSection_prop("voodoo",&Null_Init,false); //Voodoo
 
     Pstring = secprop->Add_string("voodoo_card",Property::Changeable::WhenIdle,"auto");

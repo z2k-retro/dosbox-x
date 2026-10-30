@@ -3390,7 +3390,7 @@ public:
         {
             std::vector<std::string> sectionNames = {
                 "log", "dosbox", "render", "sdl",
-                "video", "voodoo", "vsync", "ttf",
+                "video", "voodoo", "powervr", "vsync", "ttf",
                 "dos", "dosv", "pc98", "4dos",
                 "autoexec", "config", "cpu", "speaker",
                 "sblaster", "sblaster2", "gus", "midi", "mixer",
