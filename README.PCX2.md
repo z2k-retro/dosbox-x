@@ -12,6 +12,11 @@ such as the default S3.
 
 ## Settings
 
+The card can be switched on from the menu (Video > 3D accelerators > PowerVR
+PCX2 card) or in the configuration file. In the Windows package the included
+`dosbox-x.conf`, read automatically from the folder `dosbox-x.exe` starts in,
+already has it on.
+
 ```ini
 [dosbox]
 machine=svga_s3
