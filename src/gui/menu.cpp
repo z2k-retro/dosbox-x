@@ -424,6 +424,7 @@ static const char *def_menu_video_3dfx[] =
 {
     "3dfx_voodoo",
     "3dfx_glide",
+    "powervr_pcx2",
     NULL
 };
 

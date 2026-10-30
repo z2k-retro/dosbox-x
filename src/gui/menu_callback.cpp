@@ -84,6 +84,7 @@ void CopyClipboard(int all);
 void res_init(void), change_output(int output);
 void VFILE_Remove(const char *name,const char *dir = "");
 void VOODOO_Destroy(Section* /*sec*/), VOODOO_OnPowerOn(Section* /*sec*/);
+void PCX2_Destroy(Section* /*sec*/), PCX2_OnPowerOn(Section* /*sec*/);
 void GLIDE_ShutDown(Section* sec), GLIDE_PowerOn(Section* sec);
 void DOSBox_ShowConsole(void);
 void Load_Language(std::string name);
@@ -2046,6 +2047,19 @@ bool voodoo_menu_callback(DOSBoxMenu * const menu,DOSBoxMenu::item * const menui
     return true;
 }
 
+bool pcx2_menu_callback(DOSBoxMenu * const menu,DOSBoxMenu::item * const menuitem) {
+    (void)menu;//UNUSED
+    (void)menuitem;//UNUSED
+    Section_prop *section = static_cast<Section_prop *>(control->GetSection("powervr"));
+    if (section == NULL) return false;
+    bool on = section->Get_bool("pcx2");
+    SetVal("powervr", "pcx2", on?"false":"true");
+    PCX2_Destroy(section);
+    PCX2_OnPowerOn(section);
+    mainMenu.get_item("powervr_pcx2").check(section->Get_bool("pcx2")).refresh_item(mainMenu);
+    return true;
+}
+
 bool glide_menu_callback(DOSBoxMenu * const menu,DOSBoxMenu::item * const menuitem) {
 #if defined(OSFREE)
     (void)menu;
@@ -3577,12 +3591,14 @@ void AllocCallback1() {
             }
             {
                 DOSBoxMenu::item &item = mainMenu.alloc_item(DOSBoxMenu::submenu_type_id,"Video3dfxMenu");
-                item.set_text("3dfx emulation");
+                item.set_text("3D accelerators");
 
                 mainMenu.alloc_item(DOSBoxMenu::item_type_id,"3dfx_voodoo").set_text("Internal Voodoo card").
                     set_callback_function(voodoo_menu_callback);
                 mainMenu.alloc_item(DOSBoxMenu::item_type_id,"3dfx_glide").set_text("Glide passthrough").
                     set_callback_function(glide_menu_callback);
+                mainMenu.alloc_item(DOSBoxMenu::item_type_id,"powervr_pcx2").set_text("PowerVR PCX2 card").
+                    set_callback_function(pcx2_menu_callback);
             }
 #ifdef C_D3DSHADERS
             {

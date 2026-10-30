@@ -555,7 +555,7 @@ static PCI_PCX2Device *pcx2_pci = NULL;
 
 /* ---------------------------------------------------------------------- */
 
-static void PCX2_Destroy(Section *sec) {
+void PCX2_Destroy(Section *sec) {
     (void)sec;
     if (pcx2_pci) {
         UnregisterPCIDevice(pcx2_pci);
@@ -580,7 +580,7 @@ static void PCX2_Destroy(Section *sec) {
 
 static uint32_t pcx2_assigned = 0;
 
-static void PCX2_OnPowerOn(Section *sec) {
+void PCX2_OnPowerOn(Section *sec) {
     (void)sec;
     PCX2_Destroy(NULL);
 

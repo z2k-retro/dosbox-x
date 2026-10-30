@@ -3492,7 +3492,7 @@ void DOSBOX_SetupConfigSections(void) {
 
     secprop=control->AddSection_prop("powervr",&Null_Init,false); //PowerVR PCX2
 
-    Pbool = secprop->Add_bool("pcx2",Property::Changeable::OnlyAtStart,false);
+    Pbool = secprop->Add_bool("pcx2",Property::Changeable::WhenIdle,false);
     Pbool->Set_help("Emulate a PowerVR PCX2 3D accelerator (as on the Matrox m3D or VideoLogic Apocalypse 3Dx) on the PCI bus.\n"
                     "The PCX2 has no display output: it renders into the VESA linear frame buffer of the 2D card,\n"
                     "so use machine=svga_s3 (or another card with a linear frame buffer). Games such as the\n"
